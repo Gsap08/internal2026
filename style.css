@@ -1,5 +1,8 @@
 h1 {
+    margin: 0;
     text-align: center;
+    font-size: 60px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #7fd850;
     padding: 60px;
     color: white;
@@ -9,4 +12,9 @@ h1 {
 body {
     background-color: #26520a;
 
+}
+
+.navbar {
+    justify-content: flex-end;
+    background-color: #7fd850;
 }
