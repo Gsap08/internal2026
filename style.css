@@ -1,12 +1,20 @@
-h1 {
+.heading {
     margin: 0;
+    padding: 20px;
     text-align: center;
-    font-size: 60px;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #7fd850;
-    padding: 60px;
     color: white;
     
+}
+
+.mainhead {
+    font-size: 67px;
+}
+
+.secondhead {
+    text-align: top;
+    font-size: 18px;
 }
 
 body {
