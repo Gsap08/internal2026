@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <body>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="static/style.css">
 
     <Title>Ako Island Registry</Title>
     <div class="heading">
@@ -14,8 +14,11 @@
 
 
     <div class="navbar">
-        <a href="HomePage.html">Home</a>
-        <a href="Resources.html">Resources</a>
+        <a href="{{ url_for('HomePage')}}">Home</a>
+        <a href="{{ url_for('Resources')}}">Resources</a>
+
+        
+
     </div>
 
 
