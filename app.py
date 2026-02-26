@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 app = Flask(__name__)
 
 @app.route("/")
-def signinpage():
+def SignInPage():
     return render_template("SignInPage.html")
 
 @app.route("/home")
@@ -13,6 +13,10 @@ def HomePage():
 @app.route("/resources")
 def Resources():
     return render_template("Resources.html")
+
+@app.route("/register")
+def Register():
+    return render_template("Register.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
