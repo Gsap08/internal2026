@@ -30,10 +30,10 @@ def Register():
         # if existing_user:
         #     conn.close()
         ##Inserting a new user
-        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, password, year_level, username, password ))
+        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, password ))
         conn.commit()
         conn.close()
-        return redirect('{{url_for("Login")}}')
+        return redirect(url_for("Login"))
     else:
         return render_template("Registration.html")
         
@@ -41,24 +41,27 @@ def Register():
 
 
 
-@app.route('/login', methods=['POST']) ##login
+@app.route('/login', methods=['GET','POST']) ##login
 def Login():
-    username = request.form['username']
-    password = request.form['password']
-
-    conn = sqlite3.connect('akoconnect.db')  
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    user = cursor.fetchone()
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
 
-    conn.close()
+        conn = sqlite3.connect('db//akoconnect.db')  
+        cursor = conn.cursor()
 
-    if user:
-        return render_template ("HomePage.html")
+        cursor.execute("SELECT * FROM User WHERE username=? AND password=?", (username, password))
+        user = cursor.fetchone()
+
+
+        conn.close()
+
+        if user:
+            return redirect (url_for('HomePage'))
+        else:
+            return "Invalid Username or Password."
     else:
-        return "Invalid Username or Password."
-
+        return render_template ("SignInPage.html")
 if __name__ == "__main__":
     app.run(debug=True)
