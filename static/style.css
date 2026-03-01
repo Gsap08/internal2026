@@ -34,3 +34,21 @@ body {
   align-items: center;     
   height: 100vh;           
 }
+
+.imagegrid {
+    display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.tutorimg {
+    text-align: center;
+}
+
+.tutorimg img {
+    width: 100%;
+    max-width: 250px;   /* controls image size */
+    height: auto;
+    display: block;
+    margin: 0 auto;     /* centers image */
+}
