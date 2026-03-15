@@ -30,7 +30,7 @@ def Register():
         # if existing_user:
         #     conn.close()
         ##Inserting a new user
-        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, password ))
+        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, password))
         conn.commit()
         conn.close()
         return redirect(url_for("Login"))
@@ -65,3 +65,6 @@ def Login():
         return render_template ("SignInPage.html")
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
