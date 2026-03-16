@@ -23,7 +23,7 @@ def Register():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect('db\\akoconnect.db')  
+        conn = sqlite3.connect('db//akoconnect.db')  
         cursor = conn.cursor()
         # cursor.execute('SELECT * FROM "User"')
         # existing_user = cursor.fetchone()
@@ -37,8 +37,6 @@ def Register():
     else:
         return render_template("Registration.html")
         
-    
-
 
 
 @app.route('/login', methods=['GET','POST']) ##login
@@ -65,6 +63,3 @@ def Login():
         return render_template ("SignInPage.html")
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
