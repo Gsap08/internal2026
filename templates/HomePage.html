@@ -27,13 +27,17 @@
 
         <div class="tutorimg">
         <img src="static/images/meng.jpg" alt="meng_face">
-        <button>View</button>
+        <a href="{{ url_for('GetTutor', tutor_id=id) }}">
+        <button class="tutorpage">View</button>
+        </a>
         </div>
         
         <div class="tutorimg">
         <img src="static/images/kevin.png" alt="kevin_face">
-        <button>View</button>
-        </div>
+        <a href="{{ url_for('GetTutor', tutor_id=id) }}">
+        <button class="tutorpage">View</button>
+        </a>
+    </div>
     
     </div>
 

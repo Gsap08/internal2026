@@ -61,5 +61,15 @@ def Login():
             return "Invalid Username or Password."
     else:
         return render_template ("SignInPage.html")
+
+@app.route('/tutorbooking/<int:tutor_id>')
+def GetTutor():
+    conn = sqlite3.connect("db//akoconnect.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Tutors WHERE id = ?", (tutor_id,))
+    tutor = cursor.fetchone()
+    conn.close()
+    
+    return tutor, render_template("TutorPage.html")
 if __name__ == "__main__":
     app.run(debug=True)
