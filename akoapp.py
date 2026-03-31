@@ -62,14 +62,18 @@ def Login():
     else:
         return render_template ("SignInPage.html")
 
-@app.route('/tutorbooking/<int:tutor_id>')
-def GetTutor():
-    conn = sqlite3.connect("db//akoconnect.db")
+@app.route('/tutorbooking')
+def GetTutor():  
+    # 1. Go to the DB and say "Give me the info for ID #"
+    conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Tutors WHERE id = ?", (tutor_id,))
-    tutor = cursor.fetchone()
+    cursor.execute("SELECT name, bio FROM tutors WHERE id = ?", (tutor_id,))
+    data = cursor.fetchone() # This gets the specific row
     conn.close()
-    
-    return tutor, render_template("TutorPage.html")
+    # 2. Send that SPECIFIC data to the SAME page template
+    return render_template('HomePage.html', name=data[0], bio=data[1])
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)

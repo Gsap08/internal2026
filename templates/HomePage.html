@@ -1,6 +1,5 @@
 <!DOCTYPE html> 
 <body>
-
     <link rel="stylesheet" href="static/style.css">
 
     <Title>Ako Island Registry</Title>
@@ -25,17 +24,13 @@
 
     <div class="imagegrid">
 
-        <div class="tutorimg">
-        <img src="static/images/meng.jpg" alt="meng_face">
-        <a href="{{ url_for('GetTutor', tutor_id=id) }}">
-        <button class="tutorpage">View</button>
-        </a>
-        </div>
-        
-        <div class="tutorimg">
-        <img src="static/images/kevin.png" alt="kevin_face">
-        <a href="{{ url_for('GetTutor', tutor_id=id) }}">
-        <button class="tutorpage">View</button>
+        <div id="tutor_display">
+        {% for tutor in tutors %}
+  <a href="/tutor/{{ tutor[0] }}">
+      <button>View {{ tutor[1] }}</button>
+  </a>
+        {% endfor %}
+        ##NEED TO LOOK AT JINJA
         </a>
     </div>
     
