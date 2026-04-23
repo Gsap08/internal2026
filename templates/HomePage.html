@@ -19,21 +19,17 @@
     </p>
 
     <p>
-        Listed below are the names of the tutors that offer their own time to help you with your studies. Simply click on their image to see the times they are available and what subjects they specialise in. Then, follow the steps to select your tutor and book an online 1 on 1 session with them.
+        Listed below are the names of the tutors that offer their own time to help you with your studies.
     </p>
 
     <div class="imagegrid">
-
-        <div id="tutor_display">
-        {% for tutor in tutors %}
-  <a href="/tutor/{{ tutor[0] }}">
-      <button>View {{ tutor[1] }}</button>
-  </a>
-        {% endfor %}
-        ##NEED TO LOOK AT JINJA
+        
+        
         </a>
-    </div>
-    
+    </div>  
+    <a href="{{ url_for('Booking')}}">
+    <button>Begin Booking</button>
+</a>
     </div>
 
 
