@@ -23,24 +23,20 @@
 
     <div>
 
-    <form action="/confirmbooking" method="GET">
+    <form action="/bookingpage" method="GET">
 
-        <label for="TutorSelect">Choose a Tutor:</label>
+    <label>Choose a Tutor:</label>
 
-        <select name="choice" id="TutorSelect">
-            <option value="1" id="optionmeng">Meng</option>
-            <option value="2" id="optionkevin">Kevin</option>
-        </select>
+    <select name="choice">
+        <option value="1">Meng</option>
+        <option value="2">Kevin</option>
+    </select>
 
-        <button type="submit">Select Tutor</button>
+    <button type="submit">Select Tutor</button>
 
-    </form>
+</form>
 
-    {% if tutorinfo %}
-        <h1>{{ tutorinfo[1] }}</h1>
-    {% else %}
-        <p>No tutor selected</p>
-    {% endif %}
+
 
 </div>
 

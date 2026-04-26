@@ -22,21 +22,17 @@
     </div>
 
     <div>
-    {% if tutor_id == "1" %}
-    <h1>Beginner Tutor Page</h1>
+    <h1>{{ tutor_info[1] }}</h1>
+    <p>{{ extra_info }}</p>
 
-    {% elif tutor_id == "2" %}
-    <h1>Advanced Tutor Page</h1>
-    {% endif %}
+    <a href="/TutorPage">Back</a>
 
 
     </div>
 
 
     <div>
-        <a href="TutorPage.html">
-            <button >Back</button>
-        </a>
+        <a href="TutorPage.html">Go Back</a>
 
 
         

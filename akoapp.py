@@ -62,28 +62,43 @@ def Login():
     else:
         return render_template ("SignInPage.html")
 
-@app.route('/tutorbooking')
-def BeginBooking():
+@app.route('/tutorpage')
+def TutorPage():
     return render_template ("TutorPage.html", tutor_info=None)
 
-@app.route('/confirmbooking')
-def ConfirmBooking():
+@app.route('/bookingpage')
+def BookingPage():
+
     tutor = request.args.get("choice")
+
+    if not tutor:
+        return redirect(url_for("TutorPage"))
+
     extra_map = {
-    "1": "This tutor ___",
-    "2": "This tutor is very very ___"}
-    extrainfo = extra_map.get(tutor, "")
-    tutorinfo = ''
-    conn = sqlite3.connect('db//akoconnect.db')  
+        "1": "This tutor is good for beginners.",
+        "2": "This tutor is very advanced."
+    }
+
+    extra_info = extra_map.get(tutor, "")
+
+    conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?", (tutor,))
+
+    cursor.execute(
+        "SELECT * FROM Tutors WHERE tutor_id = ?",
+        (int(tutor),)
+    )
+
     tutor_info = cursor.fetchone()
     conn.close()
+
     return render_template(
-    "TutorPage.html",
-    extra_info=extrainfo,
-    tutor_info=tutorinfo
-)
+        "BookingPage.html",
+        tutor_info=tutor_info,
+        extra_info=extra_info
+    )
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
