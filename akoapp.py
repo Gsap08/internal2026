@@ -63,9 +63,12 @@ def Login():
         return render_template ("SignInPage.html")
 
 @app.route('/tutorbooking')
-def Booking():
-    return render_template ("TutorPage.html", tutor=None)
+def BeginBooking():
+    return render_template ("TutorPage.html")
 
+@app.route('/confirmbooking')
+def ConfirmBooking():
+    return render_template ("BookingPage.html")
 
 
 
