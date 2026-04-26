@@ -64,13 +64,26 @@ def Login():
 
 @app.route('/tutorbooking')
 def BeginBooking():
-    return render_template ("TutorPage.html")
+    return render_template ("TutorPage.html", tutor_info=None)
 
 @app.route('/confirmbooking')
 def ConfirmBooking():
-    return render_template ("BookingPage.html")
-
-
+    tutor = request.args.get("choice")
+    extra_map = {
+    "1": "This tutor ___",
+    "2": "This tutor is very very ___"}
+    extrainfo = extra_map.get(tutor, "")
+    tutorinfo = ''
+    conn = sqlite3.connect('db//akoconnect.db')  
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?", (tutor,))
+    tutor_info = cursor.fetchone()
+    conn.close()
+    return render_template(
+    "TutorPage.html",
+    extra_info=extrainfo,
+    tutor_info=tutorinfo
+)
 
 if __name__ == "__main__":
     app.run(debug=True)

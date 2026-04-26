@@ -22,20 +22,28 @@
 
 
     <div>
-        <form method="POST">
-            <label for="TutorSelect">Choose a Tutor:</label>
-            <select name="Tutors" id="TutorOptions">
-                <option id="1">Meng</option>
-                <option id="2">Kevin</option>
-            </select>
-            <a href="{{ url_for('ConfirmBooking')}}">
-            <button type="submit">Select Tutor</button>
-        
-        </form>
 
+    <form action="/confirmbooking" method="GET">
 
+        <label for="TutorSelect">Choose a Tutor:</label>
 
-    </div>
+        <select name="choice" id="TutorSelect">
+            <option value="1" id="optionmeng">Meng</option>
+            <option value="2" id="optionkevin">Kevin</option>
+        </select>
+
+        <button type="submit">Select Tutor</button>
+
+    </form>
+
+    {% if tutorinfo %}
+        <h1>{{ tutorinfo[1] }}</h1>
+    {% else %}
+        <p>No tutor selected</p>
+    {% endif %}
+
+</div>
+
 
 
 </body>
