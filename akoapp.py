@@ -66,35 +66,27 @@ def Login():
 def TutorPage():
     return render_template ("TutorPage.html", tutor_info=None)
 
+
 @app.route('/bookingpage')
 def BookingPage():
     tutor = request.args.get("choice")
     if not tutor:
         return redirect(url_for("TutorPage"))
 
+    #Dictionary for extra information
     extra_map = {
         "1": "This tutor is good for beginners.",
         "2": "This tutor is very advanced."
     }
-
     extra_info = extra_map.get(tutor, "")
-
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT * FROM Tutors WHERE tutor_id = ?",
-        (int(tutor),)
-    )
-
+    cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?",(int(tutor),))
     tutor_info = cursor.fetchone()
+    cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
+    timeslots = cursor.fetchall()
     conn.close()
-
-    return render_template(
-        "BookingPage.html",
-        tutor_info=tutor_info,
-        extra_info=extra_info
-    )
+    return render_template("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots)
 
 
 
