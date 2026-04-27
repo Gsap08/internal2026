@@ -62,16 +62,31 @@ def Login():
     else:
         return render_template ("SignInPage.html")
 
-@app.route('/tutorbooking')
-def GetTutor():  
-    # 1. Go to the DB and say "Give me the info for ID #"
-    conn = sqlite3.connect('my_database.db')
+@app.route('/tutorpage')
+def TutorPage():
+    return render_template ("TutorPage.html", tutor_info=None)
+
+
+@app.route('/bookingpage')
+def BookingPage():
+    tutor = request.args.get("choice")
+    if not tutor:
+        return redirect(url_for("TutorPage"))
+
+    #Dictionary for extra information
+    extra_map = {
+        "1": "This tutor is good for beginners.",
+        "2": "This tutor is very advanced."
+    }
+    extra_info = extra_map.get(tutor, "")
+    conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT name, bio FROM tutors WHERE id = ?", (tutor_id,))
-    data = cursor.fetchone() # This gets the specific row
+    cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?",(int(tutor),))
+    tutor_info = cursor.fetchone()
+    cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
+    timeslots = cursor.fetchall()
     conn.close()
-    # 2. Send that SPECIFIC data to the SAME page template
-    return render_template('HomePage.html', name=data[0], bio=data[1])
+    return render_template("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots)
 
 
 
