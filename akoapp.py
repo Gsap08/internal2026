@@ -68,9 +68,7 @@ def TutorPage():
 
 @app.route('/bookingpage')
 def BookingPage():
-
     tutor = request.args.get("choice")
-
     if not tutor:
         return redirect(url_for("TutorPage"))
 
