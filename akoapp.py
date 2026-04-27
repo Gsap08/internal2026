@@ -85,8 +85,11 @@ def BookingPage():
     tutor_info = cursor.fetchone()
     cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
     timeslots = cursor.fetchall()
+    cursor.execute("SELECT subject FROM Subjects WHERE tutor_id = ?", (tutor,))
+    subjects = cursor.fetchall()
+
     conn.close()
-    return render_template("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots)
+    return render_template ("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots, subjects=subjects)
 
 
 

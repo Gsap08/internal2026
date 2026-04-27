@@ -20,32 +20,47 @@
         
 
     </div>
+    <div class="booking">
 
-    <div>
-    <!-- <h1>{{ tutor_info[1] }}</h1>
-    <p>{{ extra_info }}</p> -->
+        <div>
+            <img src="{{ url_for('static', filename='images/' + tutor_info[5]) }}" alt="Tutor Image">
+        </div>
 
-    <form method="POST">
+        <form method="POST">
+        <h3>Available time slot:</h3>
 
-    <h3>Select a timeslot:</h3>
-
-    {% for slot in timeslots %}
-        <label>
-            <input type="radio" name="timeslot" value="{{ slot[0] }}">
-            {{ slot[1] }}: {{ slot[2] }}
-        </label>
+        {% for slot in timeslots %}
+            <label>
+                <input type="radio" name="timeslot" value="{{ slot[0] }}">
+                {{ slot[1] }}: {{ slot[2] }}
+            </label>
+            <br>
+        {% endfor %}
+        </form>
         <br>
-    {% endfor %}
+        <h3>Select your subject:</h3>
+        <form>
+        {% for subject in subjects %}
+            <label>
+                <input type="radio" name="subject" value="{{ subject[0] }}">
+                {{ subject[0] }}
+            </label>
+        {% endfor %}
+        </form>    
+        <br>
 
-    <button type="submit">Book</button>
-    </form>
-
+        <label for="message">Extra notes:</label><br>
+        <textarea name="message" id="message" rows="4" cols="40" placeholder="Write a message to your tutor."></textarea>
+        <br>
+        <button type="submit">Book</button>
+        <br>
+        <a href="{{ url_for('TutorPage')}}">Go Back</a>
 
     </div>
 
 
     <div>
-        <a href="{{ url_for('TutorPage')}}">Go Back</a>
+        
 
 
         
