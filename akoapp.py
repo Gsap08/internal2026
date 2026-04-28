@@ -91,7 +91,13 @@ def BookingPage():
     conn.close()
     return render_template ("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots, subjects=subjects)
 
-
+@app.route('/confirmationpage')
+def SaveBooking():
+    bookedtimeslot = request.args.get('timeslot')
+    bookedsubject = request.args.get('subjetc')
+    conn = sqlite3.connect('db//akoconnect.db')
+    cursor = conn.cursor()  
+    cursor.execute("INSERT INTO Bookings (tutor_id, user_id, booked_timeslot, booked_subject) VALUES (?,?,?)", (choice, , booked_timeslot, booked_subject,))
 
 if __name__ == "__main__":
     app.run(debug=True)

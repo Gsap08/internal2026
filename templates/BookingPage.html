@@ -36,23 +36,26 @@
             </label>
             <br>
         {% endfor %}
-        </form>
+
         <br>
         <h3>Select your subject:</h3>
-        <form>
+
         {% for subject in subjects %}
             <label>
                 <input type="radio" name="subject" value="{{ subject[0] }}">
                 {{ subject[0] }}
             </label>
         {% endfor %}
-        </form>    
+
         <br>
 
         <label for="message">Extra notes:</label><br>
         <textarea name="message" id="message" rows="4" cols="40" placeholder="Write a message to your tutor."></textarea>
         <br>
+        
         <button type="submit">Book</button>
+        </form>  
+        <br>
         <br>
         <a href="{{ url_for('TutorPage')}}">Go Back</a>
 
