@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
+import sqlite3, os
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route("/")
 def SignInPage():
@@ -51,7 +52,7 @@ def Login():
 
         cursor.execute("SELECT * FROM User WHERE username=? AND password=?", (username, password))
         user = cursor.fetchone()
-
+        session['user_id'] = user[0]
 
         conn.close()
 
@@ -70,6 +71,7 @@ def TutorPage():
 @app.route('/bookingpage')
 def BookingPage():
     tutor = request.args.get("choice")
+    session['tutor_id'] = tutor
     if not tutor:
         return redirect(url_for("TutorPage"))
 
@@ -91,14 +93,18 @@ def BookingPage():
     conn.close()
     return render_template ("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots, subjects=subjects)
 
-@app.route('/confirmationpage')
+@app.route('/confirmationpage', methods=['POST'])
 def SaveBooking():
-    booked_timeslot = request.args.get('timeslot')
-    booked_subject = request.args.get('subject')
-    user_id = request.args.get('')
+    tutor = session.get('tutor_id')
+    booked_timeslot = request.form.get('timeslot')
+    booked_subject = request.form.get('subject')
+    user_id = session.get('user_id')
     conn = sqlite3.connect('db//akoconnect.db')
-    cursor = conn.cursor()  
-    cursor.execute("INSERT INTO Bookings (tutor_id, user_id, booked_timeslot, booked_subject) VALUES (?,?,?,?,?)", (choice, user_id, booked_timeslot, booked_subject,))
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Bookings (tutor_id, user_id, booked_timeslot, booked_subject) VALUES (?,?,?,?)", (tutor, user_id, booked_timeslot, booked_subject,))
+    conn.commit()
+    conn.close()
+    return render_template ("ConfirmationPage.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
