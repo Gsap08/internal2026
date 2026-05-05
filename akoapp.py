@@ -99,12 +99,21 @@ def SaveBooking():
     booked_timeslot = request.form.get('timeslot')
     booked_subject = request.form.get('subject')
     user_id = session.get('user_id')
+
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
+
     cursor.execute("INSERT INTO Bookings (tutor_id, user_id, booked_timeslot, booked_subject) VALUES (?,?,?,?)", (tutor, user_id, booked_timeslot, booked_subject,))
+    
+    booking_id = cursor.lastrowid
+    cursor.execute(" SELECT Bookings.booking_id, Tutors.full_name, Bookings.booked_timeslot, Bookings.booked_subject FROM Bookings JOIN Tutors ON Bookings.tutor_id = Tutors.tutor_id WHERE Bookings.booking_id = ?", (booking_id,))
+
+    booking = cursor.fetchone()
     conn.commit()
     conn.close()
-    return render_template ("ConfirmationPage.html")
+
+    
+    return render_template ("ConfirmationPage.html", booking=booking)
 
 if __name__ == "__main__":
     app.run(debug=True)
