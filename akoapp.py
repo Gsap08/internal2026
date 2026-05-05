@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
+import sqlite3, os
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route("/")
 def SignInPage():
@@ -51,7 +52,7 @@ def Login():
 
         cursor.execute("SELECT * FROM User WHERE username=? AND password=?", (username, password))
         user = cursor.fetchone()
-
+        session['user_id'] = user[0]
 
         conn.close()
 
@@ -70,6 +71,7 @@ def TutorPage():
 @app.route('/bookingpage')
 def BookingPage():
     tutor = request.args.get("choice")
+    session['tutor_id'] = tutor
     if not tutor:
         return redirect(url_for("TutorPage"))
 
@@ -85,10 +87,33 @@ def BookingPage():
     tutor_info = cursor.fetchone()
     cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
     timeslots = cursor.fetchall()
+    cursor.execute("SELECT subject FROM Subjects WHERE tutor_id = ?", (tutor,))
+    subjects = cursor.fetchall()
+
     conn.close()
-    return render_template("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots)
+    return render_template ("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots, subjects=subjects)
 
+@app.route('/confirmationpage', methods=['POST'])
+def SaveBooking():
+    tutor = session.get('tutor_id')
+    booked_timeslot = request.form.get('timeslot')
+    booked_subject = request.form.get('subject')
+    user_id = session.get('user_id')
 
+    conn = sqlite3.connect('db//akoconnect.db')
+    cursor = conn.cursor()
+
+    cursor.execute("INSERT INTO Bookings (tutor_id, user_id, booked_timeslot, booked_subject) VALUES (?,?,?,?)", (tutor, user_id, booked_timeslot, booked_subject,))
+    
+    booking_id = cursor.lastrowid
+    cursor.execute(" SELECT Bookings.booking_id, Tutors.full_name, Bookings.booked_timeslot, Bookings.booked_subject FROM Bookings JOIN Tutors ON Bookings.tutor_id = Tutors.tutor_id WHERE Bookings.booking_id = ?", (booking_id,))
+
+    booking = cursor.fetchone()
+    conn.commit()
+    conn.close()
+
+    
+    return render_template ("ConfirmationPage.html", booking=booking)
 
 if __name__ == "__main__":
     app.run(debug=True)

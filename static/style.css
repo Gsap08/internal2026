@@ -52,3 +52,10 @@ body {
     display: block;
     margin: 0 auto;     /* centers image */
 }
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
