@@ -1,0 +1,36 @@
+<!DOCTYPE html> 
+<body>
+
+    <link rel="stylesheet" href="static/style.css">
+
+    <Title>Ako Island Registry</Title>
+    <div class="heading">
+    <h1 class="mainhead">Ako Connect</h1>
+    <h2 class="secondhead">Connecting students since 2025</h2>  
+    
+
+
+    </div>
+
+
+    <div class="navbar">
+        <a href="{{ url_for('HomePage')}}">Home</a>
+        <a href="{{ url_for('Resources')}}">Resources</a>
+
+        
+
+    </div>
+
+
+    <div>
+        {% for user_id in bookings %}
+            <li>
+                <strong>Name:</strong> {{ user[0] }} | 
+                <strong>Email:</strong> {{ user[1] }}
+            </li>
+
+        {% endfor %}
+    </div>
+
+
+</body>
