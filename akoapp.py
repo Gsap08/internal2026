@@ -120,9 +120,9 @@ def SaveBooking():
 def Dashboard():
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
-    user_id = session.get(user_id)
-    cursor.execute("SELECT * FROM bookings where user_id = ?" (user_id,))
-    dash_info = cursor.fetchone()
+    user_id = session.get('user_id')
+    cursor.execute("SELECT * FROM bookings where user_id = ?", (user_id,))
+    dash_info = cursor.fetchall()
     conn.commit()
     conn.close()
 
