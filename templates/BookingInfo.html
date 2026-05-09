@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<body>
+
+    <link rel="stylesheet" href="static/style.css">
+
+    <Title>Ako Island Registry</Title>
+    <div class="heading">
+    <h1 class="mainhead">Ako Connect</h1>
+    <h2 class="secondhead">Connecting students since 2025</h2>  
+    
+
+
+    </div>
+
+
+    <div class="navbar">
+        <a href="{{ url_for('HomePage')}}">Home</a>
+        <a href="{{ url_for('Resources')}}">Resources</a>
+
+        
+
+    </div>
+
+
+    <div>
+        {% if book_info %}
+    <table border="1">
+        <tr>
+            <th>Tutor</th>
+            <th>Timeslot</th>
+            <th>Subject</th>
+        </tr>
+
+        {% for booking in book_info %}
+        <tr>
+            <td>{{ booking["tutor_name"] }}</td>
+            <td>{{ booking["timeslot"] }}</td>
+            <td>{{ booking["subject"] }}</td>
+            <form action="{{ url_for('delete_booking', booking_id=booking['booking_id']) }}" method="POST">
+            <button type="submit">Remove</button>
+        </form>
+        </tr>
+        {% endfor %}
+    </table>
+    
+
+{% else %}
+    <p>You have no bookings yet.</p>
+{% endif %}
+    </div>
+
+    <div>
+        <a href="{{ url_for('BookingPage')}}">
+    <button>Begin a new booking</button>
+    </a>
+    </div>
+
+</body>
