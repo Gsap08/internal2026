@@ -120,15 +120,17 @@ def logout():
     session.clear()
     return redirect(url_for('Login'))
 
-@app.route ('/dashboard')
-def Dashboard():
+@app.route ('/bookings')
+def BookingInfo():
     conn = sqlite3.connect('db//akoconnect.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     user_id = session.get('user_id')
     cursor.execute(
         """
-        SELECT Bookings.tutor_id, 
+        SELECT 
+        Bookings.tutor_id, 
+        Bookings.booking_id,
         Bookings.booked_timeslot AS timeslot, 
         Bookings.booked_subject AS subject, 
         Tutors.full_name AS tutor_name 
@@ -136,11 +138,19 @@ def Dashboard():
         JOIN Tutors on Bookings.tutor_id = Tutors.tutor_id 
         where Bookings.user_id = ?""", (user_id,))
         
-    dash_info = cursor.fetchall()
+    book_info = cursor.fetchall()
     conn.commit()
     conn.close()
     
-    return render_template("Dashboard.html", dash_info=dash_info)
+    return render_template("BookingInfo.html", book_info=book_info)
 
+@app.route('/delete_booking/<int:booking_id>', methods=['POST'])
+def delete_booking(booking_id):
+    conn = sqlite3.connect('db//akoconnect.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM Bookings where booking_id = ?', (booking_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('BookingInfo'))
 if __name__ == "__main__":
     app.run(debug=True)

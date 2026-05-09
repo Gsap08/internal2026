@@ -12,7 +12,7 @@
     <div class="navbar">
         <a href="{{ url_for('HomePage')}}">Home</a>
         <a href="{{ url_for('Resources')}}">Resources</a>
-        <a href="{{ url_for('Dashboard')}}">Dashboard</a>
+        <a href="{{ url_for('BookingInfo')}}">Bookings</a>
     <form action="{{ url_for('logout') }}" method="get">
         <button type="submit">Logout</button>
     </form>
@@ -31,9 +31,7 @@
         
         </a>
     </div>  
-    <a href="{{ url_for('BookingPage')}}">
-    <button>Begin Booking</button>
-</a>
+    
     </div>
 
 
