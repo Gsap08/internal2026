@@ -95,7 +95,7 @@ def BookingPage():
 
 @app.route('/confirmationpage', methods=['POST'])
 def SaveBooking():
-    tutor = session.get('tutor_id')
+    tutor = int(session.get('tutor_id'))
     booked_timeslot = request.form.get('timeslot')
     booked_subject = request.form.get('subject')
     user_id = session.get('user_id')
@@ -121,11 +121,19 @@ def Dashboard():
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
     user_id = session.get('user_id')
-    cursor.execute("SELECT * FROM bookings where user_id = ?", (user_id,))
+    cursor.execute(
+        """
+        SELECT Bookings.tutor_id, 
+        Bookings.booked_timeslot AS timeslot, 
+        Bookings.booked_subject AS subject, 
+        Tutors.full_name AS tutor_name 
+        FROM Bookings JOIN Tutors on Bookings.tutor_id = Tutors.tutor_id 
+        where Bookings.user_id = ?""", (user_id,))
+        
     dash_info = cursor.fetchall()
     conn.commit()
     conn.close()
-
+    
     return render_template("Dashboard.html", dash_info=dash_info)
 
 if __name__ == "__main__":
