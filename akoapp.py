@@ -115,10 +115,15 @@ def SaveBooking():
     
     return render_template ("ConfirmationPage.html", booking=booking)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('Login'))
 
 @app.route ('/dashboard')
 def Dashboard():
     conn = sqlite3.connect('db//akoconnect.db')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     user_id = session.get('user_id')
     cursor.execute(
@@ -127,7 +132,8 @@ def Dashboard():
         Bookings.booked_timeslot AS timeslot, 
         Bookings.booked_subject AS subject, 
         Tutors.full_name AS tutor_name 
-        FROM Bookings JOIN Tutors on Bookings.tutor_id = Tutors.tutor_id 
+        FROM Bookings 
+        JOIN Tutors on Bookings.tutor_id = Tutors.tutor_id 
         where Bookings.user_id = ?""", (user_id,))
         
     dash_info = cursor.fetchall()
