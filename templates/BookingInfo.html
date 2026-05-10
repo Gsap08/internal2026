@@ -34,7 +34,7 @@
         {% for booking in book_info %}
         <tr>
             <td>{{ booking["tutor_name"] }}</td>
-            <td>{{ booking["timeslot"] }}</td>
+            <td>{{ booking["date_display"] }}</td>
             <td>{{ booking["subject"] }}</td>
             <form action="{{ url_for('delete_booking', booking_id=booking['booking_id']) }}" method="POST">
             <button type="submit">Remove</button>
