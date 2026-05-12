@@ -62,6 +62,7 @@ def Login():
             session['user_id'] = user[0]
             return redirect (url_for('HomePage'))
         else:
+            conn.close()
             return "Invalid Username or Password."
     else:
         return render_template ("SignInPage.html")
@@ -156,6 +157,7 @@ def logout():
 
 @app.route ('/bookings')
 def BookingInfo():
+    tutor_bookings = [] #Necessary tutor_bookings will not exist, and will crash later.
     conn = sqlite3.connect('db//akoconnect.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -203,8 +205,8 @@ def BookingInfo():
         b["date_display"] = date_obj.strftime("%A, %d %B %Y")
         formatted.append(b)
     conn.close()
-    
     return render_template("BookingInfo.html", book_info=formatted, role=role, tutor_bookings=tutor_bookings)
+
 
 @app.route('/delete_booking/<int:booking_id>', methods=['POST'])
 def delete_booking(booking_id):
