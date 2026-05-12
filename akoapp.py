@@ -53,11 +53,13 @@ def Login():
 
         cursor.execute("SELECT * FROM User WHERE username=? AND password=?", (username, password))
         user = cursor.fetchone()
-        session['user_id'] = user[0]
+        
 
         conn.close()
 
         if user:
+            session['role'] = user[6]
+            session['user_id'] = user[0]
             return redirect (url_for('HomePage'))
         else:
             return "Invalid Username or Password."
@@ -157,7 +159,10 @@ def BookingInfo():
     conn = sqlite3.connect('db//akoconnect.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
+
     user_id = session.get('user_id')
+    role = session.get('role')
+
     cursor.execute(
         """
         SELECT 
@@ -172,6 +177,24 @@ def BookingInfo():
         where Bookings.user_id = ?""", (user_id,))
         
     book_info = cursor.fetchall()
+
+    if role == 'tutor':
+        cursor.execute("SELECT tutor_id FROM Tutors where user_id =?", (user_id,))
+        tutor = cursor.fetchone()
+        if tutor:
+            tutor = tutor["tutor_id"]
+            cursor.execute("""
+                    SELECT
+                    Bookings.booking_id,
+                    Bookings.booked_subject AS subject,
+                    Bookings.booked_timeslot AS timeslot,
+                    Bookings.booked_date AS date,
+                    User.full_name AS student_name
+                    FROM Bookings
+                    JOIN User ON Bookings.user_id = User.user_id
+                    WHERE Bookings.tutor_id = ?
+                """, (tutor,))
+            tutor_bookings = cursor.fetchall()
     # convert date for display
     formatted = []
     for b in book_info:
@@ -181,7 +204,7 @@ def BookingInfo():
         formatted.append(b)
     conn.close()
     
-    return render_template("BookingInfo.html", book_info=formatted)
+    return render_template("BookingInfo.html", book_info=formatted, role=role, tutor_bookings=tutor_bookings)
 
 @app.route('/delete_booking/<int:booking_id>', methods=['POST'])
 def delete_booking(booking_id):
