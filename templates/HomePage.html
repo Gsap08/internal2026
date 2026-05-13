@@ -13,11 +13,12 @@
         <a href="{{ url_for('HomePage')}}">Home</a>
         <a href="{{ url_for('Resources')}}">Resources</a>
         <a href="{{ url_for('BookingInfo')}}">Bookings</a>
-    <form action="{{ url_for('logout') }}" method="get">
-        <button type="submit">Logout</button>
+        
     </form>
     </div>
-
+        <a href="{{ url_for('logout') }}">
+        <button type="submit" class="logout_button">Logout</button>
+        </a>
     <p>
     Welcome to the Ako Connect website. Feel free to navigate this website and look at the resources we provide.
     </p>
