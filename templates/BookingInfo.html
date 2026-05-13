@@ -23,6 +23,8 @@
 
 
     <div class="booking_info">
+            <h2 class="textcenter">Your bookings</h2>
+
     {% if book_info %}
     <table border="1">
         <tr>
@@ -56,7 +58,7 @@
 {% if role == "tutor" %}
 
 <div>
-    <h2>Bookings Made With You</h2>
+    <h2 class="textcenter">Bookings Made With You</h2>
 
     {% if tutor_bookings %}
 
@@ -88,6 +90,8 @@
     <button class="newbookingbutton">Begin a new booking</button>
     </a>
     </div>
-        <button type="submit" class="logout_button">Logout</button>
 
+    <a  href="{{ url_for('logout')}}">
+        <button type="submit" class="logout_button">Logout</button>
+    
 </body>

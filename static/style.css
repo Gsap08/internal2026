@@ -8,9 +8,23 @@
     
 }
 
-p {
-    text-align: center;
 
+
+.textcenter{
+    text-align: center;
+}
+
+.textleft{
+    text-align: left;
+    color: black;
+}
+
+.nb2simg{
+    width: 400px;
+}
+
+.ourexamsimg{
+    width: 400px;
 }
 
 .form_box {
@@ -18,9 +32,11 @@ p {
     padding-top: 30px;
 }
 
-h1 {
+h1{
     text-align: center;
 }
+
+
 
 .newbookingbutton {
     display: flex;
