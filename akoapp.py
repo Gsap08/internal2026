@@ -85,12 +85,12 @@ def BookingPage():
     if not tutor_id:
         return redirect(url_for("TutorPage"))
 
-    # #Dictionary for extra information
-    # extra_map = {
-    #     "1": "This tutor is good for beginners.",
-    #     "2": "This tutor is very advanced."
-    # }
-    # extra_info = extra_map.get(tutor, "")
+    #Dictionary for extra information
+    extra_map = {
+        "1": "This tutor is good for beginners.",
+        "2": "This tutor is very advanced."
+    }
+    extra_info = extra_map.get(tutor, "")
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?",(int(tutor),))
