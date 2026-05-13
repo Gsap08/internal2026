@@ -63,7 +63,7 @@ def Login():
             return redirect (url_for('HomePage'))
         else:
             conn.close()
-            return "Invalid Username or Password."
+            return render_template("SignInPage.html", error="Incorrect Username or Password.")
     else:
         return render_template ("SignInPage.html")
 

@@ -27,7 +27,7 @@
     <table border="1">
         <tr>
             <th>Tutor</th>
-            <th>Timeslot</th>
+            <th>Date</th>
             <th>Subject</th>
         </tr>
 
@@ -63,15 +63,13 @@
             <th>Student</th>
             <th>Subject</th>
             <th>Date</th>
-            <th>Timeslot</th>
         </tr>
 
         {% for booking in tutor_bookings %}
         <tr>
             <td>{{ booking["student_name"] }}</td>
             <td>{{ booking["subject"] }}</td>
-            <td>{{ booking["date"] }}</td>
-            <td>{{ booking["timeslot"] }}</td>
+            <td>{{ booking["date_display"] }}</td>
         </tr>
         {% endfor %}
     </table>
