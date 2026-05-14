@@ -27,11 +27,6 @@ def Register():
 
         conn = sqlite3.connect('db//akoconnect.db')  
         cursor = conn.cursor()
-        # cursor.execute('SELECT * FROM "User"')
-        # existing_user = cursor.fetchone()
-        # if existing_user:
-        #     conn.close()
-        ##Inserting a new user
         cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, password))
         conn.commit()
         conn.close()
@@ -41,7 +36,7 @@ def Register():
         
 
 
-@app.route('/login', methods=['GET','POST']) ##login
+@app.route('/login', methods=['GET','POST']) #login
 def Login():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -160,7 +155,7 @@ def logout():
 
 @app.route ('/bookings')
 def BookingInfo():
-    tutor_bookings = [] #Necessary tutor_bookings will not exist, and will crash later.
+    tutor_bookings = [] #Necessary tutor_bookings will not exist otherwise, and will crash later.
     conn = sqlite3.connect('db//akoconnect.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
