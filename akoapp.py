@@ -85,24 +85,21 @@ def BookingPage():
     if not tutor_id:
         return redirect(url_for("TutorPage"))
 
-    #Dictionary for extra information
-    extra_map = {
-        "1": "This tutor is good for beginners.",
-        "2": "This tutor is very advanced."
-    }
-    extra_info = extra_map.get(tutor, "")
     conn = sqlite3.connect('db//akoconnect.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Tutors WHERE tutor_id = ?",(int(tutor),))
+    cursor.execute("SELECT tutor_id, full_name, year_level, email, subject_options, user_id FROM Tutors WHERE tutor_id = ?",(tutor,))
     tutor_info = cursor.fetchone()
-    cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
+    cursor.execute('SELECT tutor_image FROM Tutors where tutor_id =?', (tutor_id,))
+    tutor_image = cursor.fetchone()
+    tutor_image = tutor_image[0]
+    cursor.execute("SELECT timeslot_id, day, session_time FROM Tutor_Timeslot WHERE tutor_id = ?", ((tutor_id,)))
     timeslots = cursor.fetchall()
-    cursor.execute("SELECT subject FROM Subjects WHERE tutor_id = ?", (tutor,))
+    cursor.execute("SELECT subject FROM Subjects WHERE tutor_id = ?", (tutor_id,))
     subjects = cursor.fetchall()
-    cursor.execute("SELECT DISTINCT day FROM Tutor_Timeslot WHERE tutor_id = ?", (int(tutor),))
+    cursor.execute("SELECT DISTINCT day FROM Tutor_Timeslot WHERE tutor_id = ?", ((tutor_id,)))
     available_days = cursor.fetchall()
 
-# convert DB result into list like ["Monday", "Thursday"]
+#convert database result into list 
     allowed_days = [d[0] for d in available_days]
 
     day_map = {
@@ -131,7 +128,7 @@ def BookingPage():
             })
 
     conn.close()
-    return render_template ("BookingPage.html",tutor_info=tutor_info,extra_info=extra_info, timeslots=timeslots, subjects=subjects, available_dates=available_dates)
+    return render_template ("BookingPage.html",tutor_image=tutor_image, tutor_info=tutor_info, timeslots=timeslots, subjects=subjects, available_dates=available_dates)
 
 @app.route('/confirmationpage', methods=['POST'])
 def SaveBooking():

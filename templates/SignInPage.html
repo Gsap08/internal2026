@@ -16,7 +16,12 @@
         
     </div>
 
+    
+
     <div class="signinsheet">
+        {% if error %}
+    <p style="color:red;" class="textcenter">{{ error }}</p>
+    {% endif %}
         <form method="POST" class="form_box" action="{{url_for('Login')}}">
             <input type="text" placeholder ="Enter username" name="username" required>
             <input type="password" placeholder="Enter password" name="password" required>
@@ -26,9 +31,9 @@
         </form>
     </div>
 
-    {% if error %}
-    <p style="color:red;">{{ error }}</p>
-    {% endif %}
+    
 
 
 </body>
+
+<footer class="footercss"><p> Est. 2025 © Ako Connect</p></footer>

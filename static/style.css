@@ -43,6 +43,15 @@ h1{
     justify-content: center;
 }
 
+.footercss{
+    background-color: #7fd850;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    
+}
+
 .imagerow{
     display: flex;
     justify-content: center;
