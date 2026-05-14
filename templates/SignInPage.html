@@ -16,15 +16,24 @@
         
     </div>
 
+    
+
     <div class="signinsheet">
-        <form method="POST" action="{{url_for('Login')}}">
+        {% if error %}
+    <p style="color:red;" class="textcenter">{{ error }}</p>
+    {% endif %}
+        <form method="POST" class="form_box" action="{{url_for('Login')}}">
             <input type="text" placeholder ="Enter username" name="username" required>
             <input type="password" placeholder="Enter password" name="password" required>
             <button type="submit">Sign in</button>
             <p>Don't have an account?</p>
-            <a href="{{ url_for('Register')}}">Register an account</a>
+            <a href="{{ url_for('Register')}}" class="navlink">Register an account</a>
         </form>
     </div>
 
+    
+
 
 </body>
+
+<footer class="footercss"><p> Est. 2025 © Ako Connect</p></footer>

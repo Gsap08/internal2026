@@ -8,6 +8,67 @@
     
 }
 
+
+
+.textcenter{
+    text-align: center;
+}
+
+.textleft{
+    text-align: left;
+    color: black;
+}
+
+.nb2simg{
+    width: 400px;
+}
+
+.ourexamsimg{
+    width: 400px;
+}
+
+.form_box {
+    text-align: center;
+    padding-top: 30px;
+}
+
+h1{
+    text-align: center;
+}
+
+
+
+.newbookingbutton {
+    display: flex;
+    justify-content: center;
+}
+
+.footercss{
+    background-color: #7fd850;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    
+}
+
+.imagerow{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 50px;
+}
+
+table {
+margin: 0 auto;
+}
+
+.logout-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 .mainhead {
     font-size: 67px;
 }
@@ -27,6 +88,12 @@ body {
     background-color: #7fd850;
 }
 
+.navlink{
+    color: black;
+    display: block;
+    text-align: center;
+}
+
 .signinsheet {
   display: flex;
   flex-direction: column;
@@ -34,6 +101,8 @@ body {
   align-items: center;     
   height: 100vh;           
 }
+
+
 
 .imagegrid {
     display: grid;

@@ -23,7 +23,8 @@
     <div class="booking">
 
         <div>
-            <img src="{{ url_for('static', filename='images/' + tutor_info[5]) }}" alt="Tutor Image">
+            <img src="{{ url_for('static', filename='images/' + tutor_image[0]
+) }}" alt="Tutor Image">
         </div>
 
         <form action="/confirmationpage" method="POST">
@@ -63,7 +64,7 @@
         </form>  
         <br>
         <br>
-        <a href="{{ url_for('TutorPage')}}">Go Back</a>
+        <a href="{{ url_for('TutorPage')}}" class="navlink">Go Back</a>
 
     </div>
 
@@ -78,3 +79,5 @@
 
 
 </body>
+
+<footer class="footercss"><p> Est. 2025 © Ako Connect</p></footer>

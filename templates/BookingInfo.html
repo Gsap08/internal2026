@@ -22,12 +22,14 @@
     </div>
 
 
-    <div>
+    <div class="booking_info">
+            <h2 class="textcenter">Your bookings</h2>
+
     {% if book_info %}
     <table border="1">
         <tr>
             <th>Tutor</th>
-            <th>Timeslot</th>
+            <th>Date</th>
             <th>Subject</th>
         </tr>
 
@@ -36,8 +38,10 @@
             <td>{{ booking["tutor_name"] }}</td>
             <td>{{ booking["date_display"] }}</td>
             <td>{{ booking["subject"] }}</td>
+            <td>
             <form action="{{ url_for('delete_booking', booking_id=booking['booking_id']) }}" method="POST">
-            <button type="submit">Remove</button>
+            <button type="submit">Remove Booking</button>
+            </td>
         </form>
         </tr>
         
@@ -54,7 +58,7 @@
 {% if role == "tutor" %}
 
 <div>
-    <h2>Bookings Made With You</h2>
+    <h2 class="textcenter">Bookings Made With You</h2>
 
     {% if tutor_bookings %}
 
@@ -63,15 +67,15 @@
             <th>Student</th>
             <th>Subject</th>
             <th>Date</th>
-            <th>Timeslot</th>
         </tr>
 
         {% for booking in tutor_bookings %}
         <tr>
             <td>{{ booking["student_name"] }}</td>
             <td>{{ booking["subject"] }}</td>
-            <td>{{ booking["date"] }}</td>
-            <td>{{ booking["timeslot"] }}</td>
+            <td>{{ booking["date_display"] }}</td>
+            <td><form action="{{ url_for('delete_booking', booking_id=booking['booking_id']) }}" method="POST">
+            <button type="submit">Remove Booking</button></td>
         </tr>
         {% endfor %}
     </table>
@@ -83,8 +87,13 @@
 {% endif %}
 
         <a href="{{ url_for('BookingPage')}}">
-    <button>Begin a new booking</button>
+    <button class="newbookingbutton">Begin a new booking</button>
     </a>
     </div>
 
+    <a  href="{{ url_for('logout')}}">
+        <button type="submit" class="logout_button">Logout</button>
+    
 </body>
+
+<footer class="footercss"><p> Est. 2025 © Ako Connect</p></footer>

@@ -22,16 +22,18 @@
 
 
     <div>
-        <form method="POST" actions="{{url_for('Register')}}">
+        <form method="POST" actions="{{url_for('Register')}}" class="signinsheet">
             <input type="text" placeholder = "Enter full name" name="full_name" required>
             <input type="email" placeholder ="Enter gmail" name="email" required>
             <input type="integer" placeholder ="Enter year Level" name="year_level" required>
             <input type="text" placeholder ="Enter username" name="username" required>
             <input type="password" placeholder="Enter password" name="password" required>
         <button type="submit">Sign Up</button>
-        <a href="{{ url_for('Login')}}">Already have an account? Sign in!</a>
+        <a href="{{ url_for('Login')}}" class="navlink">Already have an account? Sign in!</a>
         </form>
     </div>
 
 
 </body>
+
+<footer class="footercss"><p> Est. 2025 © Ako Connect</p></footer>
