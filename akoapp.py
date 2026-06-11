@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3, os
+import bcrypt
 from datetime import datetime, timedelta
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -25,9 +26,14 @@ def Register():
         username = request.form['username']
         password = request.form['password']
 
+        hashed_password = bcrypt.hashpw(
+            password.encode('utf-8'),
+            bcrypt.gensalt()
+        ).decode('utf-8')
+
         conn = sqlite3.connect('db//akoconnect.db')  
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, password))
+        cursor.execute("INSERT INTO User (full_name, email, year_level, username, password) VALUES (?, ?, ?, ?, ?)", (full_name, email, year_level, username, hashed_password))
         conn.commit()
         conn.close()
         return redirect(url_for("Login"))
@@ -36,31 +42,44 @@ def Register():
         
 
 
-@app.route('/login', methods=['GET','POST']) #login
+@app.route('/login', methods=['GET','POST'])
 def Login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-
-        conn = sqlite3.connect('db//akoconnect.db')  
+        conn = sqlite3.connect('db//akoconnect.db')
         cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM User WHERE username=? AND password=?", (username, password))
-        user = cursor.fetchone()
-        
+        # Find user by username
+        cursor.execute(
+            "SELECT * FROM User WHERE username=?",
+            (username,)
+        )
 
-        conn.close()
+        user = cursor.fetchone()
 
         if user:
-            session['role'] = user[6]
-            session['user_id'] = user[0]
-            return redirect (url_for('HomePage'))
-        else:
-            conn.close()
-            return render_template("SignInPage.html", error="Incorrect Username or Password.")
-    else:
-        return render_template ("SignInPage.html")
+            stored_hash = user[4]
+
+            # Compare entered password against stored hash
+            if bcrypt.checkpw(
+                password.encode('utf-8'),
+                stored_hash.encode('utf-8')
+            ):
+                session['role'] = user[6]
+                session['user_id'] = user[0]
+
+                conn.close()
+                return redirect(url_for('HomePage'))
+
+        conn.close()
+        return render_template(
+            "SignInPage.html",
+            error="Incorrect Username or Password."
+        )
+
+    return render_template("SignInPage.html")
 
 @app.route('/tutorpage')
 def TutorPage():
